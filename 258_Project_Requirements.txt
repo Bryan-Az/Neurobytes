@@ -1,0 +1,15 @@
+a) entire  application archive or  Colab with execution on git hub and all the artifacts -screenshots etc.,.   - aka not just colab - the actual execution summary and results in addition. The colab should be runnable (aka retrain and infer). Production demo of website doing inference. Production pipeline of the same using any cloud providers showing model training, eval etc.,. Proper eval dashboards (tensorboard) and other artifacts. Caution: Turnitin will be used heavily for checking. copy pasting existing colabs content available in google web search is a BIG no no. The expectation is for students to actually write the project end2end from scratch. 
+
+b) 20% of the project should show case all the visualization techniques of model metrics. (very important) - what are the core metrics for the ml model and how they fare for the model you trained. proper principles of data set split, data augmentation etc.,. should all be applied
+
+c) colab/project  should be very heavily documented. Also section in colab highlighting why we used what type of parameters like loss functions, activation functions, normalization, augmentation etc.,. should be present
+
+d) do not use any reinforcement learning in your project. 
+
+e) team size and team members etc.,,. mentioned clearly. 
+
+f) what are the inputs, outputs, what are the key metrics to evaluate the model should be elaborated.
+
+g) The core defining the model - code should be substantial  (if the model definition is just 10 - 50 lines  - something wrong - 50% of score is based on how complex the problem you are solving and how complex your model or combination of models are) and is the meat of the project. Your model architecture, training loop, etc.,. 
+
+Do not try to risk having  projects requiring large number of gpus/tpus - show case it on very small data set. extra points if you train your project on tpu.
