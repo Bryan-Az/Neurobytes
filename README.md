@@ -10,6 +10,7 @@ All code artifacts for this project are also included within this repo.
 The timeline for this project is 2 weeks. As such, our database is small which allows for quick model testing, training, and evaluation. It is also available on the cloud for persistent storage.
 
 ### UX Design using Gradio
+Gradio is a cloud-based web application development platform. In this project, we used Gradio to create the demo application.
 
 The user interface consists of:
 
@@ -26,7 +27,7 @@ The Large-Language Recommendation Model is built to support:
 3. Re-training & CI/CD
 4. Evaluation using Tensorboard
 
-### Cloud Database 
+### Cloud Database - AWS RDBS, MySQL
 
 The cloud database chosen will have data related to:
 
@@ -43,17 +44,17 @@ The model architecture currently decided is a Large-Language model trained on te
 The team consists of 4  master students in software engineering specializing in data science at San Jose State University.
 ## Front-End
 ### Kelly Nguyen
-List accomplishments here!
+UX Design & Gradio
 
 ### Joash Muganda
-List accomplishments here!
+Platforms, CI/CD, HuggingFace
 
 ## Back-End 
 ### Nick Kornienko
-List accomplishments here!
+MLOps - HuggingFace
 
 ### Alexis Ambriz
- List accomplishments here!
+AWS Cloud Database
 
 # Resources
 
