@@ -62,7 +62,9 @@ def transform_mask_to_songs(row_index, array, data):
 
 
 if __name__ == "__main__":
-    data = load_data('millionsong_dataset.zip')
+    file_id = '1EL4vYhO4A0Cgm8akBgAfDrWOGvtF6Xvo'
+    file_name = 'millionsong_dataset.zip'
+    data = load_data(file_id=file_id, file_name=file_name)
     dtm, lyric_term_features = create_document_term_matrix(data['text'])
     song_artist_index = list(data.index)
     similarity_matrix = calculate_cosine_similarity(dtm)
@@ -72,4 +74,5 @@ if __name__ == "__main__":
     user_preferences.reset_index(drop=False, inplace=True)
     user_preferences.rename(columns={'index':'songID'}, inplace=True)
     user_preferences.to_csv(DATA_DIR + '/user_preferences.csv')
+    print('Synthetic User Data Saved to Local File: ' + DATA_DIR + '/user_preferences.csv')
 
