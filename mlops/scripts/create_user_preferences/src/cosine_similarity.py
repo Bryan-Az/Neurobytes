@@ -8,6 +8,6 @@ def calculate_cosine_similarity(dtm):
     return cosine_similarity(dtm)
 
 if __name__ == "__main__":
-    data = load_data('million_song_dataset.csv')
+    data = load_data('millionsong_dataset.zip')
     dtm, features = create_document_term_matrix(data['text'])
     similarity_matrix = calculate_cosine_similarity(dtm)

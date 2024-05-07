@@ -25,4 +25,4 @@ def load_data(file_name):
 
 # Example usage
 if __name__ == "__main__":
-    data = load_data('million_song_dataset.csv')  # Ensure 'example.csv' exists in the '/data' folder
+    data = load_data('millionsong_dataset.zip')  # Ensure 'example.csv' exists in the '/data' folder

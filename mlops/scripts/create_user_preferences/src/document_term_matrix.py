@@ -10,5 +10,5 @@ def create_document_term_matrix(text_data):
     return dtm, vectorizer.get_feature_names_out()
 
 if __name__ == "__main__":
-    data = load_data('million_song_dataset.csv')
+    data = load_data('millionsong_dataset.zip')
     dtm, features = create_document_term_matrix(data['text'])
