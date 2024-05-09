@@ -33,10 +33,11 @@ def create_text_corpus(data, lyric_chars=1000):
         return words
     
     artist_names = data['artist']
+    song_name = data['song']
     lyrics = data['text']
     top_words = lyrics.apply(lambda x: top_n_words(x)) 
     
-    return artist_names + ' ' + top_words
+    return artist_names + ' ' + song_name + ' ' + top_words
 
 
 if __name__ == "__main__":
