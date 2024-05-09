@@ -84,7 +84,7 @@ def search_files(service, file_name):
         print(e)
     return items
 
-def load_data(file_id, file_name):
+def load_data(file_id, file_name, n=10000):
     """
     Load data from a specified file within the data directory.
     Only a sample of 2000 rows will be used to load data
@@ -99,7 +99,8 @@ def load_data(file_id, file_name):
         file_path = os.path.join(DATA_DIR, file_name)
         data = pd.read_csv(file_path)
         print(f"Data loaded successfully from {file_path}")
-        return data.iloc[:2000, :]
+        sample_data = data.sample(n, replace=False).reset_index(drop=False)
+        return sample_data
     else:
         try:
             creds = load_credentials()
@@ -126,7 +127,8 @@ def load_data(file_id, file_name):
             file_path = os.path.join(DATA_DIR, file_name)
             data = pd.read_csv(file_path)
             print(f"Data loaded successfully from {file_path}")
-            return data.iloc[:2000, :]
+            sample_data = data.sample(n, replace=False).reset_index(drop=False)
+            return sample_data
 
         except Exception as e:
             print('An error occured in auth with google')

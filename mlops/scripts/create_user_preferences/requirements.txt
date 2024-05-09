@@ -1,4 +1,5 @@
 pandas==1.3.3
+nltk
 scikit-learn
 pydrive
 oauth2client
