@@ -26,12 +26,7 @@ def generate_user_preferences(similarity_matrix, feature_names, num_users=1000, 
         user_sim_df = sim_df.iloc[starter_songs,:]
         def select_top_similar(row, n=top_similar_n):
             '''
-            returns top n similar song indices to the starter song sampled
-            for each user to generate synthetic user preferences.
-
-            It includes self with similarity of 1 (starter song + n similar songs)
-            ex. n = 3, songs_per_user = 50, num_users=1000
-            returns: num_users * (n + 1) * (songs_per_user) = 200,000 preferences
+            selects top n similar songs to the starter song and adds it to user preferences
             '''
 
             curr_song_index = row.name # include starter song
@@ -70,7 +65,7 @@ if __name__ == "__main__":
     file_id = '1EL4vYhO4A0Cgm8akBgAfDrWOGvtF6Xvo'
     file_name = 'millionsong_dataset.zip'
     data = load_data(file_id=file_id, file_name=file_name)
-    dtm, lyric_term_features = create_document_term_matrix(data['text'])
+    dtm, lyric_term_features = create_document_term_matrix(data)
     song_artist_index = list(data.index)
     similarity_matrix = calculate_cosine_similarity(dtm)
     user_preference_masks = generate_user_preferences(similarity_matrix, feature_names=song_artist_index)
