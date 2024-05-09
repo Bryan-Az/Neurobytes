@@ -127,7 +127,8 @@ def load_data(file_id, file_name, n=10000):
             file_path = os.path.join(DATA_DIR, file_name)
             data = pd.read_csv(file_path)
             print(f"Data loaded successfully from {file_path}")
-            return data.iloc[:2000, :]
+            sample_data = data.sample(n, replace=False).reset_index(drop=False)
+            return sample_data
 
         except Exception as e:
             print('An error occured in auth with google')
