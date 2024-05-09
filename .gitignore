@@ -4,4 +4,5 @@ client_secrets.json
 mlops/scripts/create_user_preferences/venv/
 data/MillionSongSubset
 data/MillionSongSubsetMetadata
+../../../db/data/
 
