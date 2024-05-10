@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 # load LASTFM_API_KEY from .env
 import requests
+import os
 
 def fetch_data(api_key, method, params):
     base_url = "http://ws.audioscrobbler.com/2.0/"
@@ -65,10 +66,13 @@ load_dotenv()
 api_key = os.getenv('LASTFM_API_KEY')
 tracks_skipped = 0
 
+def print_tracks_skipped():
+    print(f"Tracks skipped: {tracks_skipped}")
+
 
 def fetch_and_parse(row):
     global tracks_skipped
-    data = fetch_lastfm_data(api_key, row['artist_name'], row['title'])
+    data = fetch_lastfm_data(api_key, row['artist'], row['song'])
     if data is None:
         tracks_skipped += 1
         return None

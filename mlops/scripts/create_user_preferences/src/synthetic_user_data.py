@@ -1,8 +1,10 @@
 import numpy as np
 from config import DATA_DIR
 import pandas as pd
+import os
 from data_loader import load_credentials, load_data, upload_data
 from cosine_similarity import create_document_term_matrix, calculate_cosine_similarity
+from integrate_lastfm import *
 
 creds = load_credentials()
 
@@ -74,17 +76,32 @@ def save_preferences(user_preferences):
     upload_data(filename, creds=creds)
     print('Synthetic User Data Saved to Remote Drive.')
 
+def integrate_lastfm(user_preferences):
+  ### Adding additional LastFM Data for inference with NN Model ###
+    user_preferences['lastfm_data'] =  user_preferences.progress_apply(fetch_and_parse, axis=1)
+    user_preferences = user_preferences[user_preferences['lastfm_data'].notna()]
+    user_preferences.reset_index(drop=True, inplace=True)
+    track_details_df = pd.json_normalize(user_preferences['lastfm_data'])
+    mixed = pd.concat(
+        [user_preferences.drop(columns=['lastfm_data']), track_details_df], axis=1)
+    print_tracks_skipped()
+    return mixed
 
 
 if __name__ == "__main__":
     file_id = '1EL4vYhO4A0Cgm8akBgAfDrWOGvtF6Xvo'
     file_name = 'millionsong_dataset.zip'
     data = load_data(file_id=file_id, file_name=file_name)
+
+    ### Creating the Synthetic user preferences
     dtm, lyric_term_features = create_document_term_matrix(data)
     song_artist_index = list(data.index)
     similarity_matrix = calculate_cosine_similarity(dtm)
     user_preference_masks = generate_user_preferences(similarity_matrix, feature_names=song_artist_index)
     user_preferences = pd.concat([transform_mask_to_songs(row, array, data) for row, array in enumerate(user_preference_masks.items())], axis = 0)
+
+    ### Connecting user data to additional LastFM features for model inference
+    user_preferences = integrate_lastfm(user_preferences)
     save_preferences(user_preferences=user_preferences)
     
     

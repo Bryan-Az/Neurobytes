@@ -13,7 +13,6 @@ import socket
 
 def is_port_in_use(port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         return s.connect_ex(('localhost', port)) == 0
 
 def load_credentials():
@@ -27,7 +26,7 @@ def load_credentials():
         creds, _ = google.auth.default()
     except google.auth.exceptions.DefaultCredentialsError:
         # Run the flow using the client secrets file
-        if is_port_in_use(8080):
+        if not is_port_in_use(8080):
             path_to_json = PROJECT_DIR + "/client_secrets.json"  # Path relative to your main application file
             print(path_to_json)
             flow = InstalledAppFlow.from_client_secrets_file(path_to_json, SCOPES)
