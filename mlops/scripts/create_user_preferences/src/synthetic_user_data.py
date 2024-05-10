@@ -1,27 +1,29 @@
 import numpy as np
 from config import DATA_DIR
 import pandas as pd
-from data_loader import load_data
+from data_loader import load_credentials, load_data, upload_data
 from cosine_similarity import create_document_term_matrix, calculate_cosine_similarity
+
+creds = load_credentials()
 
 def save_similarity_matrix(matrix, feature_names, filepath):
     matrix = pd.DataFrame(matrix, index=feature_names, columns=feature_names)
     matrix.to_csv(filepath)
     return matrix
 
-def generate_user_preferences(similarity_matrix, feature_names, num_users=1000, songs_per_user=(40,50)):
+def generate_user_preferences(similarity_matrix, feature_names, num_users=10, songs_per_user=(50,100), top_similar=(5, 10)):
     """ Generate synthetic user data based on artist similarity. """
     sim_df = save_similarity_matrix(similarity_matrix, feature_names, DATA_DIR + '/song_similarity_matrix.csv')
     song_index = similarity_matrix.shape[0]
     # dictionary assigning masks of indices-to-song in the similarity matrix to users
     # requires selecting the data from the similarity matrix using the masks for semantics
     user_data = {}
-    
+    top_similar_n = np.random.randint(*top_similar)
     for user_id in range(num_users):
         num_songs = np.random.randint(*songs_per_user)
         # samples 40-50 starter songs
         starter_songs = np.random.choice(song_index, size=num_songs, replace=False)
-        top_similar_n = 3
+        
         # selects these indices from the pandas df
         user_sim_df = sim_df.iloc[starter_songs,:]
         def select_top_similar(row, n=top_similar_n):
@@ -60,6 +62,19 @@ def transform_mask_to_songs(row_index, array, data):
 
     return user_songs
 
+def save_preferences(user_preferences):
+    '''
+    saves data locally and then uploads to google drive
+    '''
+    filename = DATA_DIR + '/user_preferences.csv'
+    user_preferences.reset_index(drop=False, inplace=True)
+    user_preferences.rename(columns={'index':'songID'}, inplace=True)
+    user_preferences.to_csv(filename, index=False)
+    print('Synthetic User Data Saved to Local File: ' + DATA_DIR + '/user_preferences.csv')
+    upload_data(filename, creds=creds)
+    print('Synthetic User Data Saved to Remote Drive.')
+
+
 
 if __name__ == "__main__":
     file_id = '1EL4vYhO4A0Cgm8akBgAfDrWOGvtF6Xvo'
@@ -69,10 +84,8 @@ if __name__ == "__main__":
     song_artist_index = list(data.index)
     similarity_matrix = calculate_cosine_similarity(dtm)
     user_preference_masks = generate_user_preferences(similarity_matrix, feature_names=song_artist_index)
-    pd.DataFrame.from_dict(user_preference_masks, orient='index').to_csv(DATA_DIR + '/user_preference_masks.csv')
     user_preferences = pd.concat([transform_mask_to_songs(row, array, data) for row, array in enumerate(user_preference_masks.items())], axis = 0)
-    user_preferences.reset_index(drop=False, inplace=True)
-    user_preferences.rename(columns={'index':'songID'}, inplace=True)
-    user_preferences.to_csv(DATA_DIR + '/user_preferences.csv')
-    print('Synthetic User Data Saved to Local File: ' + DATA_DIR + '/user_preferences.csv')
+    save_preferences(user_preferences=user_preferences)
+    
+    
 
