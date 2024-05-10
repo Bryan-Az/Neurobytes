@@ -18,7 +18,7 @@ The user interface consists of:
 2. A model performance metric dashboard.
 
 
-### ML Ops on HuggingFace
+### ML Ops on Google Colab and Google Drive
 
 The Large-Language Recommendation Model is built to support: 
 
@@ -47,14 +47,14 @@ The team consists of 4  master students in software engineering specializing in 
 UX Design & Gradio
 
 ### Joash Muganda
-Platforms, CI/CD, HuggingFace
+Platforms, CI/CD, MLOps
 
 ## Back-End 
 ### Nick Kornienko
-MLOps - HuggingFace
+MLOps
 
 ### Alexis Ambriz
-AWS Cloud Database
+MLOps, AWS Cloud Database
 
 # Resources
 
