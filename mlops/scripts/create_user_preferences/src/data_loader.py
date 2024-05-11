@@ -3,19 +3,16 @@ from config import DATA_DIR, PROJECT_DIR
 import os
 import io
 import google
-from google.cloud import storage
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
 from google.oauth2 import credentials
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
+from googleapiclient.http import MediaFileUpload
 import socket
 
 def is_port_in_use(port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         return s.connect_ex(('localhost', port)) == 0
 
 def load_credentials():
@@ -30,7 +27,6 @@ def load_credentials():
     except google.auth.exceptions.DefaultCredentialsError:
         # Run the flow using the client secrets file
         if not is_port_in_use(8080):
-            print('In if in load creds')
             path_to_json = PROJECT_DIR + "/client_secrets.json"  # Path relative to your main application file
             print(path_to_json)
             flow = InstalledAppFlow.from_client_secrets_file(path_to_json, SCOPES)
@@ -58,6 +54,10 @@ def load_credentials():
     return creds
 
 def search_files(service, file_name):
+    '''
+    helps search for files in the neurobytes google folder
+    '''
+    items = []
     try:
         creds = load_credentials()
         print('credentials loaded')
@@ -133,3 +133,22 @@ def load_data(file_id, file_name, n=10000):
         except Exception as e:
             print('An error occured in auth with google')
             print(e)
+
+def upload_data(filename, creds):
+    """Uploads a file to Google Drive."""
+    SCOPES = ['https://www.googleapis.com/auth/drive.file']
+    service = build('drive', 'v3', credentials=creds)
+    neurobytes_folder = '1VxknqmOtEsoCM3R0DQEOYpjMVUOHW24H'
+    file_metadata = {
+        'name': os.path.basename(filename),
+        'parents': [neurobytes_folder]
+    }
+    media = MediaFileUpload(filename, mimetype='text/csv')
+    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    print(f"File ID: {file.get('id')}")
+
+if __name__ == '__main__':
+    creds = load_credentials()
+    service = build('drive', 'v3', credentials=creds)
+    file_name = "CMPE-258: Team Neurobytes"
+    search_files(service, file_name)
