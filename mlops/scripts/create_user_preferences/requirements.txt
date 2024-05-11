@@ -6,3 +6,6 @@ oauth2client
 google-cloud-storage
 google-auth
 google-auth-oauthlib
+tqdm
+python-dotenv
+os
