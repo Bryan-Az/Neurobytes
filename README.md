@@ -9,6 +9,8 @@ All code artifacts for this project are also included within this repo.
 ## Project Architecture
 The timeline for this project is 2 weeks. As such, our database is small which allows for quick model testing, training, and evaluation. It is also available on the cloud for persistent storage.
 
+Link to the Project Demo: https://huggingface.co/spaces/Neurobytes/Neurobytes_Music_Recommender/tree/main
+
 ### UX Design using Gradio
 Gradio is a cloud-based web application development platform. In this project, we used Gradio to create the demo application.
 
