@@ -5,6 +5,8 @@ The 4 main non-code artifacts created to demonstrate this project include a slid
 
 All code artifacts for this project are also included within this repo. 
 
+Project report link: https://docs.google.com/document/d/1ijN4PO7KD46EseAia9yMDEkNwsEFPo8xTCgd0jagAtU/edit?usp=sharing
+
 
 ## Project Architecture
 The timeline for this project is 2 weeks. As such, our database is small which allows for quick model testing, training, and evaluation. It is also available on the cloud for persistent storage.
